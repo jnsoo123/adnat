@@ -1,14 +1,21 @@
-h3 Organizations
 - if current_user.organization.nil?
+  h3 Organizations
   p You aren't a member of any organization. Join an existing one or create a new one.
-- if @organizations.present?
-  ul
-    - @organizations.each do |organization|
-      - edit_path = edit_organization_path(organization)
-      - join_path = join_organization_path(organization_id: organization.id)
-      li= "#{organization.name} #{link_to 'Edit', edit_path} #{link_to 'Join', join_path, method: :patch}".html_safe
-h3 Create Organization
-= simple_form_for @organization do |f|
-  = f.input  :name
-  = f.input  :hourly_rate
-  = f.button :submit
+  - if @organizations.present?
+    ul
+      - @organizations.each do |organization|
+        - edit_path = edit_organization_path(organization)
+        - join_path = join_organization_path(organization_id: organization.id)
+        li= "#{organization.name} #{link_to 'Edit', edit_path} #{link_to 'Join', join_path, method: :patch}".html_safe
+  h3 Create Organization
+  = simple_form_for @organization do |f|
+    = f.input  :name
+    = f.input  :hourly_rate
+    = f.button :submit
+- else
+  h3= current_user.organization.name
+  = link_to 'View Shifts', nil
+  br
+  = link_to 'Edit', edit_organization_path(current_user.organization)
+  br
+  = link_to 'Leave', leave_organization_path, method: :patch
