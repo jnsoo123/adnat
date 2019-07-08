@@ -1,0 +1,31 @@
+h3= current_user.organization.name
+h4 Shifts
+table border='1'
+  thead
+    tr
+      th Employee Name
+      th Shift Date
+      th Start Time
+      th End Time
+      th Break Length (Minutes)
+      th Hours Worked
+      th Shift Cost
+  tbody
+    - @shifts.each do |shift|
+      tr
+        td= shift.user.name
+        td= shift.start.to_date
+        td= shift.start.strftime('%I:%M %p')
+        td= shift.finish.strftime('%I:%M %p')
+        td= shift.break_length
+        td= shift.hours_worked
+        td= number_to_currency(shift.shift_cost)
+    tr
+      = form_for @shift, url: shifts_path, method: :post do |f|
+        td= current_user.name
+        td= f.date_field :shift_date
+        td= f.time_field :start
+        td= f.time_field :finish
+        td= f.number_field :break_length
+        td colspan='2'
+          = f.submit
