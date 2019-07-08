@@ -54,12 +54,6 @@ RSpec.describe ShiftForm, type: :model do
       form.break_length = -20
       expect(form).to_not be_valid
     end
-
-    it 'doesnt allow to save when finish time is greater than start time' do
-      form.start        = '05:00 PM'
-      form.finish       = '08:00 AM'
-      expect(form).to_not be_valid
-    end
   end
 
   context 'Instance Methods' do
@@ -76,6 +70,13 @@ RSpec.describe ShiftForm, type: :model do
       it 'returns false when an attribute is invalid' do
         form.break_length = nil
         expect(form.save).to be_falsy
+      end
+
+      it 'knows when to update date to add 1 day when overnight' do
+        form.start = '05:00 PM'
+        form.finish = '03:00 AM'
+        form.save
+        expect(Shift.last.finish.to_i).to be > Shift.last.start.to_i
       end
     end
 

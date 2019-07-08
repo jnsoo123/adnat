@@ -14,7 +14,6 @@ class ShiftForm
   validates :start,        presence: true
   validates :finish,       presence: true
   validates :break_length, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validate  :finish_time_greater_than_start_time
 
   def initialize(attr={})
     super
@@ -45,12 +44,8 @@ class ShiftForm
     @user_id      ||= self.shift.user_id
   end
 
-  def finish_time_greater_than_start_time
-    if @start.present? && @finish.present? && @shift_date.present?
-      if (start_shift.to_i >= end_shift.to_i)
-        errors.add(:shift, 'is invalid')
-      end
-    end
+  def start_time_greater_than_finish_time?
+    Time.parse(@start) > Time.parse(@finish)
   end
 
   def create_shift
@@ -66,11 +61,14 @@ class ShiftForm
   end
 
   def end_shift
-    datetime_parser(@shift_date, @finish)
+    date = Date.parse(@shift_date)
+    date = date + 1.day if start_time_greater_than_finish_time?
+    datetime_parser(date, @finish)
   end
 
   def datetime_parser(date, time)
-    Date.parse(date).to_datetime +
+    date = Date.parse(date) unless date.class == Date
+    date.to_datetime +
       Time.parse(time).seconds_since_midnight.seconds
   end
 
