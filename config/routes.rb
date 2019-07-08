@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   scope module: :users, path: 'users' do
     resource :join_organization,  only: :update
     resource :leave_organization, only: :update
+    resource :update_accounts,    only: [:edit, :update]
   end
 
   root to: 'organizations#index'

@@ -12,6 +12,7 @@
   <body>
     <h1><%= link_to 'Adnat', root_path %></h1>
     <p>Logged in as <%= current_user.name %>, <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></p>
+    <p><%= link_to 'Update User Account', edit_update_accounts_path %></p>
     <%= yield %>
   </body>
 </html>
