@@ -3,7 +3,8 @@ class ShiftsController < ApplicationController
     if current_user.organization.nil?
       redirect_to root_path
     else
-      @shifts = current_user.organization.shifts.order(:start).reverse
+      @q      = current_user.organization.shifts.ransack(params[:q])
+      @shifts = @q.result.includes(:user).order(:start).reverse
       @shift  = ShiftForm.new
     end
   end

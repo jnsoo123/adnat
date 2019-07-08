@@ -17,6 +17,7 @@ gem 'devise', '~> 4.6.2'
 gem 'slim', '~> 4.0.1'
 gem 'rb-readline'
 gem 'simple_form', '~> 4.1.0'
+gem 'ransack', '~> 2.1.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
