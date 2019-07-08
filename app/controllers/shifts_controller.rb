@@ -1,7 +1,11 @@
 class ShiftsController < ApplicationController
   def index
-    @shifts = current_user.organization.shifts.order(:start).reverse
-    @shift  = ShiftForm.new
+    if current_user.organization.nil?
+      redirect_to root_path
+    else
+      @shifts = current_user.organization.shifts.order(:start).reverse
+      @shift  = ShiftForm.new
+    end
   end
 
   def create
