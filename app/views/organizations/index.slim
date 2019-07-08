@@ -4,7 +4,7 @@ h3 Organizations
 - if @organizations.present?
   ul
     - @organizations.each do |organization|
-      li= "#{organization.name} #{link_to 'Edit', nil} #{link_to 'Join', nil}".html_safe
+      li= "#{organization.name} #{link_to 'Edit', nil} #{link_to 'Join', join_organization_path(organization_id: organization.id), method: :patch}".html_safe
 h3 Create Organization
 = simple_form_for @organization do |f|
   = f.input  :name

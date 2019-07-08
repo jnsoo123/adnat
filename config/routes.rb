@@ -3,5 +3,9 @@ Rails.application.routes.draw do
 
   resources :organizations, only: [:index, :create]
 
+  scope module: :users, path: 'users' do
+    resource :join_organization, only: :update
+  end
+
   root to: 'organizations#index'
 end
