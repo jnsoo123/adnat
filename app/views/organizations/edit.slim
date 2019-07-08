@@ -1,0 +1,6 @@
+h4 Edit Organization
+= simple_form_for @organization, url: organization_path(@organization), method: :patch do |f|
+  = f.input :name
+  = f.input :hourly_rate
+  = f.button :submit
+= link_to 'Delete', organization_path(@organization), method: :delete
