@@ -58,9 +58,21 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+ 
+  config.include Devise::Test::ControllerHelpers, type: :controller
 end
 
 # Includes FactoryBot
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+end
+
+Capybara.configure do |config|
+  config.javascript_driver = :webkit
+  config.default_max_wait_time = 20
+end
+
+Capybara::Webkit.configure do |config|
+  config.debug = true
+  config.timeout = 5
 end

@@ -1,1 +1,12 @@
-
+h3 Organizations
+- if current_user.organization.nil?
+  p You aren't a member of any organization. Join an existing one or create a new one.
+- if @organizations.present?
+  ul
+    - @organizations.each do |organization|
+      li= "#{organization.name} #{link_to 'Edit', nil} #{link_to 'Join', nil}".html_safe
+h3 Create Organization
+= simple_form_for @organization do |f|
+  = f.input  :name
+  = f.input  :hourly_rate
+  = f.button :submit
