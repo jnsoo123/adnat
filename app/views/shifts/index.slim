@@ -23,7 +23,7 @@ table border='1'
         td= number_to_currency(shift.shift_cost)
         td
           = link_to 'Edit', edit_shift_path(shift), style: 'margin-right: 4px;'
-          = link_to 'Delete', nil
+          = link_to 'Delete', shift_path(shift), method: :delete
     tr
       = form_for @shift, url: shifts_path, method: :post do |f|
         td= current_user.name

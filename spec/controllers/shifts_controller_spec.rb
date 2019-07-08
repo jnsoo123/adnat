@@ -84,7 +84,6 @@ RSpec.describe ShiftsController, type: :controller do
 
   context 'PATCH update' do
     let(:shift) { create :shift }
-
     subject do
       patch :update, params: {
         id: shift.id,
@@ -97,11 +96,40 @@ RSpec.describe ShiftsController, type: :controller do
       }
     end
 
-    it 'updates start and finish date time' do
+    context 'with correct params' do
+      it 'updates start and finish date time' do
+        subject
+        shift.reload
+        expect(shift.start.to_date.to_s).to eq '2018-01-01'
+        expect(shift.finish.to_date.to_s).to eq '2018-01-01'
+      end
+    end
+
+    context 'with incorrect params' do
+      before do
+        allow_any_instance_of(ShiftForm).to receive(:update).and_return(false)
+      end
+
+      it 'returns 200' do
+        subject
+        expect(response).to have_http_status 200
+      end
+    end
+  end
+
+  context 'DELETE destroy' do
+    let(:shift) { create :shift }
+
+    subject { delete :destroy, params: { id: shift.id } }
+
+    it 'destroys shift' do
       subject
-      shift.reload
-      expect(shift.start.to_date.to_s).to eq '2018-01-01'
-      expect(shift.finish.to_date.to_s).to eq '2018-01-01'
+      expect(Shift.find_by_id(shift.id)).to be_nil
+    end
+
+    it 'returns 302' do
+      subject
+      expect(response).to have_http_status 302
     end
   end
 end

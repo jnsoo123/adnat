@@ -95,6 +95,18 @@ RSpec.describe ShiftForm, type: :model do
         expect(shift.start.strftime('%I:%M %p')).to eq '09:00 AM'
         expect(shift.finish.strftime('%I:%M %p')).to eq '04:00 PM'
       end
+
+      it 'doesnt update shift with an invalid param' do
+        form.break_length = nil
+        form.update
+        shift.reload
+        expect(shift.break_length).to_not eq 100
+      end
+
+      it 'returns false with an invalid param' do
+        form.break_length = nil
+        expect(form.update).to be_falsy
+      end
     end
   end
 end

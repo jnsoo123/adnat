@@ -25,6 +25,9 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
+    if shift.destroy
+      redirect_to shifts_path
+    end
   end
 
   private
@@ -33,7 +36,7 @@ class ShiftsController < ApplicationController
     params.require(:shift)
       .permit(:shift_date, :start, :finish, :break_length)
       .merge(user_id: current_user.id)
-  end
+  end 
 
   def shift
     Shift.find(params[:id])
