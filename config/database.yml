@@ -1,0 +1,24 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  encoding: utf8mb4
+  database: adnat_development
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+test:
+  <<: *default
+  encoding: utf8mb4
+  database: adnat_test
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
