@@ -64,4 +64,44 @@ RSpec.describe ShiftsController, type: :controller do
       expect(response).to have_http_status 302
     end
   end
+
+  context 'GET edit' do
+    let(:shift) { create :shift }
+
+    subject { get :edit, params: { id: shift.id } }
+
+    it 'sets ShiftForm' do
+      subject
+      expect(assigns[:shift]).to be_a ShiftForm
+      expect(assigns[:shift].shift).to eq shift
+    end
+
+    it 'returns 200' do
+      subject
+      expect(response).to have_http_status 200
+    end
+  end
+
+  context 'PATCH update' do
+    let(:shift) { create :shift }
+
+    subject do
+      patch :update, params: {
+        id: shift.id,
+        shift: {
+          shift_date: '2018-01-01',
+          start: '08:00 AM',
+          finish: '05:00 PM',
+          break_length: '100'
+        }
+      }
+    end
+
+    it 'updates start and finish date time' do
+      subject
+      shift.reload
+      expect(shift.start.to_date.to_s).to eq '2018-01-01'
+      expect(shift.finish.to_date.to_s).to eq '2018-01-01'
+    end
+  end
 end

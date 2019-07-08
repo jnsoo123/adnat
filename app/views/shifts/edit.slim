@@ -1,0 +1,7 @@
+h4 Edit Shift
+= simple_form_for @shift, url: shift_path(id: @shift.shift.id), method: :put do |f|
+  = f.input :shift_date
+  = f.input :start
+  = f.input :finish
+  = f.input :break_length
+  = f.submit 'Update Shift'

@@ -10,6 +10,7 @@ table border='1'
       th Break Length (Minutes)
       th Hours Worked
       th Shift Cost
+      th Actions
   tbody
     - @shifts.each do |shift|
       tr
@@ -20,6 +21,9 @@ table border='1'
         td= shift.break_length
         td= shift.hours_worked
         td= number_to_currency(shift.shift_cost)
+        td
+          = link_to 'Edit', edit_shift_path(shift), style: 'margin-right: 4px;'
+          = link_to 'Delete', nil
     tr
       = form_for @shift, url: shifts_path, method: :post do |f|
         td= current_user.name
