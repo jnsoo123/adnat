@@ -12,7 +12,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mysql2', '~> 0.5.2'
-gem 'devise', '~> 4.6.2'
+gem 'devise', '~> 4.7.1'
 gem 'slim', '~> 4.0.1'
 gem 'rb-readline'
 gem 'simple_form', '~> 4.1.0'
